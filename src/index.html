@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,8 +6,18 @@
     <title>Weather-App</title>
   </head>
   <body>
-    <div class="main-content">
-
+    <div class="header">
+      <h1>Weather App</h1>
+      <form novalidate class="location-form">
+        <input
+          placeholder="Enter Location"
+          type="text"
+          name="location"
+          id="location"
+        />
+        <button id="submit-btn" title="submit" type="submit"></button>
+      </form>
     </div>
+    <div class="main-content"></div>
   </body>
 </html>
