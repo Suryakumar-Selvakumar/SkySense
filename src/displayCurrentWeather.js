@@ -19,7 +19,6 @@ function formatAMPM(hours, minutes) {
   var ampm = hours >= 12 ? "pm" : "am";
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? "0" + minutes : minutes;
   var strTime = hours + ":" + minutes + " " + ampm;
   return strTime;
 }
@@ -84,7 +83,7 @@ function displayCurrentWeather(weatherData) {
 
   const humidity = document.createElement("p");
   humidity.classList.add("current-humidity");
-  humidity.textContent = `${weatherData.currentConditions.humidity}`;
+  humidity.textContent = "\u{1F4A7}" + weatherData.currentConditions.humidity;
 
   const temp = document.createElement("p");
   temp.classList.add("current-temp");
@@ -102,13 +101,13 @@ function displayCurrentWeather(weatherData) {
   addressDateTimeDiv.classList.add("address-date-time");
   addressDateTimeDiv.append(address, datetime);
 
-  const tempFeelslikeDiv = document.createElement("div");
-  tempFeelslikeDiv.classList.add("temp-feelslike");
-  tempFeelslikeDiv.append(temp, feelslike);
+//   const tempFeelslikeDiv = document.createElement("div");
+//   tempFeelslikeDiv.classList.add("temp-feelslike");
+//   tempFeelslikeDiv.append(temp, feelslike);
 
   const tempFeelslikeHumidityDiv = document.createElement("div");
   tempFeelslikeHumidityDiv.classList.add("temp-feelslike-humidity");
-  tempFeelslikeHumidityDiv.append(tempFeelslikeDiv, humidity);
+  tempFeelslikeHumidityDiv.append(temp, feelslike, humidity);
 
   const iconTempFeelslikeHumidityDiv = document.createElement("div");
   iconTempFeelslikeHumidityDiv.classList.add("icon-temp-feelslike-humidity");
