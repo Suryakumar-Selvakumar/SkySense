@@ -5,7 +5,7 @@ async function fetchData(location) {
     "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
   const url =
     baseUrl +
-    `${location}?unitGroup=us&key=GW86HSGEHF5AVYES3FFP4YW5N&contentType=json`;
+    `${location}?iconSet=icons2&unitGroup=us&key=GW86HSGEHF5AVYES3FFP4YW5N&contentType=json`;
   const response = await fetch(url, { mode: "cors" });
   const weatherData = await response.json();
   //   && imgData.data.images
@@ -28,7 +28,7 @@ async function fetchData(location) {
     });
     return {
       currentConditions: {
-        conditions: weatherData.currentConditions.conditions,
+        icon: weatherData.currentConditions.icon,
         datetime: weatherData.currentConditions.datetime,
         feelslike: weatherData.currentConditions.feelslike,
         humidity: weatherData.currentConditions.humidity,
