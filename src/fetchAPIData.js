@@ -9,23 +9,23 @@ async function fetchData(location) {
   const response = await fetch(url, { mode: "cors" });
   const weatherData = await response.json();
   //   && imgData.data.images
-  if (weatherData) {
+  if (weatherData && response.status !== 400) {
     weatherData.days.forEach((dateObj) => {
-        const validKeys = [
-          "conditions",
-          "datetime",
-          "description",
-          "humidity",
-          "temp",
-          "tempmax",
-          "tempmin",
-        ];
-        Object.keys(dateObj).forEach((key) => {
-          if (!validKeys.includes(key)) {
-            delete dateObj[key];
-          }
-        });
-      })
+      const validKeys = [
+        "conditions",
+        "datetime",
+        "description",
+        "humidity",
+        "temp",
+        "tempmax",
+        "tempmin",
+      ];
+      Object.keys(dateObj).forEach((key) => {
+        if (!validKeys.includes(key)) {
+          delete dateObj[key];
+        }
+      });
+    });
     return {
       currentConditions: {
         conditions: weatherData.currentConditions.conditions,
@@ -43,15 +43,4 @@ async function fetchData(location) {
   }
 }
 
-async function callFetchData(location) {
-  try {
-    const response = await fetchData(location);
-    return response;
-  } catch (error) {
-    console.error(error);
-    // Set a default location that will be displayed if the entered location couldn't be fetched
-    return "Location not found, please try again.";
-  }
-}
-
-export { callFetchData };
+export { fetchData };
