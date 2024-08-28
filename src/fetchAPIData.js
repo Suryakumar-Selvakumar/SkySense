@@ -10,12 +10,34 @@ async function fetchData(location) {
   const weatherData = await response.json();
   //   && imgData.data.images
   if (weatherData) {
-    return [
-      weatherData.currentConditions,
-      weatherData.days,
-      weatherData.description,
-      weatherData.resolvedAddress,
-    ];
+    weatherData.days.forEach((dateObj) => {
+        const validKeys = [
+          "conditions",
+          "datetime",
+          "description",
+          "humidity",
+          "temp",
+          "tempmax",
+          "tempmin",
+        ];
+        Object.keys(dateObj).forEach((key) => {
+          if (!validKeys.includes(key)) {
+            delete dateObj[key];
+          }
+        });
+      })
+    return {
+      currentConditions: {
+        conditions: weatherData.currentConditions.conditions,
+        datetime: weatherData.currentConditions.datetime,
+        feelslike: weatherData.currentConditions.feelslike,
+        humidity: weatherData.currentConditions.humidity,
+        temp: weatherData.currentConditions.temp,
+      },
+      days: weatherData.days,
+      description: weatherData.description,
+      resolvedAddress: weatherData.resolvedAddress,
+    };
   } else {
     throw new Error("No Location found for the search query.");
   }
