@@ -30,9 +30,9 @@ async function fetchData(location) {
       currentConditions: {
         icon: weatherData.currentConditions.icon,
         datetime: weatherData.currentConditions.datetime,
-        feelslike: weatherData.currentConditions.feelslike,
         humidity: weatherData.currentConditions.humidity,
         temp: weatherData.currentConditions.temp,
+        conditions: weatherData.currentConditions.conditions
       },
       days: weatherData.days,
       description: weatherData.description,

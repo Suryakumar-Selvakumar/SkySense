@@ -92,22 +92,32 @@ function displayCurrentWeather(weatherData) {
   datetime.classList.add("current-datetime");
   datetime.textContent = `${currentTimeFormated}`;
 
-  const feelslike = document.createElement("p");
-  feelslike.classList.add("current-feelslike");
-  feelslike.textContent =
-    "Feels like " + weatherData.currentConditions.feelslike + "\u02DA";
+  const tempMaxMin = document.createElement("p");
+  tempMaxMin.classList.add("current-temp-max-min");
+  tempMaxMin.textContent =
+    "High " +
+    weatherData.days[0].tempmax.toFixed() +
+    "\u02DA" +
+    " \u2022 " +
+    "Low " +
+    weatherData.days[0].tempmin.toFixed() +
+    "\u02DA";
 
   const humidity = document.createElement("p");
   humidity.classList.add("current-humidity");
-  humidity.textContent = "\u{1F4A7}" + weatherData.currentConditions.humidity;
+  humidity.textContent = "\u{1F4A7}" + weatherData.currentConditions.humidity.toFixed();
 
   const temp = document.createElement("p");
   temp.classList.add("current-temp");
-  temp.textContent = `${weatherData.currentConditions.temp}\u02DA`;
+  temp.textContent = `${weatherData.currentConditions.temp.toFixed()}\u02DA`;
 
   const description = document.createElement("p");
   description.classList.add("current-description");
   description.textContent = `${weatherData.description}`;
+
+  const conditions = document.createElement("p");
+  conditions.classList.add("current-conditions");
+  conditions.textContent = `${weatherData.currentConditions.conditions}`;
 
   const address = document.createElement("p");
   address.classList.add("current-address");
@@ -117,23 +127,19 @@ function displayCurrentWeather(weatherData) {
   addressDateTimeDiv.classList.add("address-date-time");
   addressDateTimeDiv.append(address, datetime);
 
-  //   const tempFeelslikeDiv = document.createElement("div");
-  //   tempFeelslikeDiv.classList.add("temp-feelslike");
-  //   tempFeelslikeDiv.append(temp, feelslike);
+  const tempConditionstempMaxMinDiv = document.createElement("div");
+  tempConditionstempMaxMinDiv.classList.add("temp-conditions-tempmaxmin");
+  tempConditionstempMaxMinDiv.append(temp, conditions, tempMaxMin);
 
-  const tempFeelslikeHumidityDiv = document.createElement("div");
-  tempFeelslikeHumidityDiv.classList.add("temp-feelslike-humidity");
-  tempFeelslikeHumidityDiv.append(temp, feelslike, humidity);
+  const iconHumidityDiv = document.createElement("div");
+  iconHumidityDiv.classList.add("icon-humidity");
+  iconHumidityDiv.append(icon, humidity);
 
-  const iconTempFeelslikeHumidityDiv = document.createElement("div");
-  iconTempFeelslikeHumidityDiv.classList.add("icon-temp-feelslike-humidity");
-  iconTempFeelslikeHumidityDiv.append(tempFeelslikeHumidityDiv, icon);
+  const containerDiv = document.createElement("div");
+  containerDiv.classList.add("container-div");
+  containerDiv.append(tempConditionstempMaxMinDiv, iconHumidityDiv);
 
-  weatherDiv.append(
-    addressDateTimeDiv,
-    iconTempFeelslikeHumidityDiv,
-    description
-  );
+  weatherDiv.append(addressDateTimeDiv, containerDiv, description);
   mainContent.appendChild(weatherDiv);
 }
 
