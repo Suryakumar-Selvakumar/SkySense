@@ -23,6 +23,61 @@ function formatAMPM(hours, minutes) {
   return strTime;
 }
 
+function getDayFunc(date) {
+  const day = new Date(date).getDay();
+  if (day === 0) {
+    return "Sun";
+  } else if (day === 1) {
+    return "Mon";
+  } else if (day === 2) {
+    return "Tue";
+  } else if (day === 3) {
+    return "Wed";
+  } else if (day === 4) {
+    return "Thu";
+  } else if (day === 5) {
+    return "Fri";
+  } else if (day === 6) {
+    return "Sat";
+  }
+}
+
+function iconSetter(icon, weatherData, index) {
+  if (weatherData.days[index].icon === "snow") {
+    icon.src = snow;
+  } else if (weatherData.days[index].icon === "snow-showers-day") {
+    icon.src = snowShowersDay;
+  } else if (weatherData.days[index].icon === "snow-showers-night") {
+    icon.src = snowShowersNight;
+  } else if (weatherData.days[index].icon === "thunder-rain") {
+    icon.src = thunderRain;
+  } else if (weatherData.days[index].icon === "thunder-showers-day") {
+    icon.src = thunderShowersDay;
+  } else if (weatherData.days[index].icon === "thunder-showers-night") {
+    icon.src = thunderShowersNight;
+  } else if (weatherData.days[index].icon === "rain") {
+    icon.src = rain;
+  } else if (weatherData.days[index].icon === "showers-day") {
+    icon.src = showersDay;
+  } else if (weatherData.days[index].icon === "showers-night") {
+    icon.src = showersNight;
+  } else if (weatherData.days[index].icon === "fog") {
+    icon.src = fog;
+  } else if (weatherData.days[index].icon === "wind") {
+    icon.src = wind;
+  } else if (weatherData.days[index].icon === "cloudy") {
+    icon.src = cloudy;
+  } else if (weatherData.days[index].icon === "partly-cloudy-day") {
+    icon.src = partlyCloudyDay;
+  } else if (weatherData.days[index].icon === "partly-cloudy-night") {
+    icon.src = partlyCloudyNight;
+  } else if (weatherData.days[index].icon === "clear-day") {
+    icon.src = clearDay;
+  } else if (weatherData.days[index].icon === "clear-night") {
+    icon.src = clearNight;
+  }
+}
+
 function iconBackgroundSetter(icon, weatherData, weatherDiv) {
   if (weatherData.currentConditions.icon === "snow") {
     icon.src = snow;
@@ -95,10 +150,12 @@ async function fetchTimeZone(latitude, longitude, date, time) {
     .reduce((response, word) => (response += word.slice(0, 1)), "");
 }
 
-async function displayWeather(weatherData) {
+async function displayWeather(weatherData, state, dataDate) {
   const mainContent = document.querySelector(".main-content");
   const weatherDiv = document.createElement("div");
   weatherDiv.classList.add("weather-div");
+
+  const weatherDataDays = weatherData.days;
 
   const icon = document.createElement("img");
   icon.classList.add("current-icon");
@@ -106,7 +163,7 @@ async function displayWeather(weatherData) {
 
   const latitude = weatherData.latitude;
   const longitude = weatherData.longitude;
-  const date = weatherData.days[0].datetime;
+  const date = weatherDataDays[0].datetime;
   const time = weatherData.currentConditions.datetime;
   const timeZone = await fetchTimeZone(latitude, longitude, date, time);
 
@@ -118,18 +175,15 @@ async function displayWeather(weatherData) {
   datetime.classList.add("current-datetime");
   datetime.textContent = `${currentTimeFormated}` + " " + timeZone;
 
-  // const conditions = document.createElement("p");
-  // conditions.classList.add("current-conditions");
-
   const tempMaxMin = document.createElement("p");
   tempMaxMin.classList.add("current-temp-max-min");
   tempMaxMin.textContent =
     "High " +
-    weatherData.days[0].tempmax.toFixed() +
+    weatherDataDays[0].tempmax.toFixed() +
     "\u02DA" +
     " \uFF5C " +
     "Low " +
-    weatherData.days[0].tempmin.toFixed() +
+    weatherDataDays[0].tempmin.toFixed() +
     "\u02DA";
 
   const humidity = document.createElement("p");
@@ -171,6 +225,36 @@ async function displayWeather(weatherData) {
 
   weatherDiv.append(addressDateTimeDiv, containerDiv, description);
   mainContent.appendChild(weatherDiv);
+
+  const daysDiv = document.createElement("div");
+  daysDiv.classList.add("days-div");
+  for (let i = 0; i < 8; i++) {
+    const day = document.createElement("div");
+    day.classList.add("day");
+    day.setAttribute("data-date", weatherDataDays[i].datetime);
+
+    const dayPara = document.createElement("p");
+    dayPara.classList.add("day-para");
+    dayPara.textContent = `${getDayFunc(weatherDataDays[i].datetime)}`;
+
+    const dayIcon = document.createElement("img");
+    dayIcon.classList.add("day-icon");
+    iconSetter(dayIcon, weatherData, i);
+
+    const dayTempMaxMin = document.createElement("p");
+    dayTempMaxMin.classList.add("day-temp-max-min");
+    dayTempMaxMin.textContent =
+      weatherDataDays[i].tempmax.toFixed() +
+      "\u02DA" +
+      " " +
+      " " +
+      weatherDataDays[i].tempmin.toFixed() +
+      "\u02DA";
+
+    day.append(dayPara, dayIcon, dayTempMaxMin);
+    daysDiv.appendChild(day);
+  }
+  mainContent.appendChild(daysDiv);
 }
 
 export { displayWeather };

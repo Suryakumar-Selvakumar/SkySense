@@ -18,6 +18,7 @@ async function fetchData(location) {
         "temp",
         "tempmax",
         "tempmin",
+        "icon",
       ];
       Object.keys(dateObj).forEach((key) => {
         if (!validKeys.includes(key)) {
