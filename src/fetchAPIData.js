@@ -5,10 +5,9 @@ async function fetchData(location) {
     "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
   const url =
     baseUrl +
-    `${location}?iconSet=icons2&unitGroup=us&key=GW86HSGEHF5AVYES3FFP4YW5N&contentType=json`;
+    `${location}?lang=en&iconSet=icons2&unitGroup=us&key=GW86HSGEHF5AVYES3FFP4YW5N&contentType=json`;
   const response = await fetch(url, { mode: "cors" });
   const weatherData = await response.json();
-  //   && imgData.data.images
   if (weatherData && response.status !== 400) {
     weatherData.days.forEach((dateObj) => {
       const validKeys = [
@@ -32,11 +31,14 @@ async function fetchData(location) {
         datetime: weatherData.currentConditions.datetime,
         humidity: weatherData.currentConditions.humidity,
         temp: weatherData.currentConditions.temp,
-        conditions: weatherData.currentConditions.conditions
+        conditions: weatherData.currentConditions.conditions,
       },
       days: weatherData.days,
       description: weatherData.description,
       resolvedAddress: weatherData.resolvedAddress,
+      timeZone: weatherData.timezone,
+      latitude: weatherData.latitude,
+      longitude: weatherData.longitude,
     };
   } else {
     throw new Error("No Location found for the search query.");

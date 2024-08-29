@@ -75,7 +75,27 @@ function iconBackgroundSetter(icon, weatherData, weatherDiv) {
   }
 }
 
-function displayCurrentWeather(weatherData) {
+async function fetchTimeZone(latitude, longitude, date, time) {
+  const dateDifferenceInSeconds = (dateInitial, dateFinal) =>
+    (dateFinal - dateInitial) / 1_000;
+  const currentDate = `${date}T${time}Z`;
+  const timeSeconds = dateDifferenceInSeconds(
+    new Date("1970-01-01T00:00:00Z"),
+    new Date(currentDate)
+  );
+
+  let baseUrl = "https://maps.googleapis.com/maps/api/timezone/json?location";
+  const url =
+    baseUrl +
+    `=${latitude},${longitude}&timestamp=${timeSeconds}&key=AIzaSyB7W9b6lNxJhDPV72E58qQyY06gppgT6cY`;
+  const response = await fetch(url, { mode: "cors" });
+  const timeZoneData = await response.json();
+  return timeZoneData.timeZoneName
+    .split(/\s/)
+    .reduce((response, word) => (response += word.slice(0, 1)), "");
+}
+
+async function displayWeather(weatherData) {
   const mainContent = document.querySelector(".main-content");
   const weatherDiv = document.createElement("div");
   weatherDiv.classList.add("weather-div");
@@ -84,13 +104,22 @@ function displayCurrentWeather(weatherData) {
   icon.classList.add("current-icon");
   iconBackgroundSetter(icon, weatherData, weatherDiv);
 
+  const latitude = weatherData.latitude;
+  const longitude = weatherData.longitude;
+  const date = weatherData.days[0].datetime;
+  const time = weatherData.currentConditions.datetime;
+  const timeZone = await fetchTimeZone(latitude, longitude, date, time);
+
   const currentTime = weatherData.currentConditions.datetime.substring(0, 5);
   const currentHours = currentTime.substring(0, 2),
     currentMinutes = currentTime.slice(-2);
   const currentTimeFormated = formatAMPM(currentHours, currentMinutes);
   const datetime = document.createElement("p");
   datetime.classList.add("current-datetime");
-  datetime.textContent = `${currentTimeFormated}`;
+  datetime.textContent = `${currentTimeFormated}` + " " + timeZone;
+
+  // const conditions = document.createElement("p");
+  // conditions.classList.add("current-conditions");
 
   const tempMaxMin = document.createElement("p");
   tempMaxMin.classList.add("current-temp-max-min");
@@ -98,14 +127,15 @@ function displayCurrentWeather(weatherData) {
     "High " +
     weatherData.days[0].tempmax.toFixed() +
     "\u02DA" +
-    " \u2022 " +
+    " \uFF5C " +
     "Low " +
     weatherData.days[0].tempmin.toFixed() +
     "\u02DA";
 
   const humidity = document.createElement("p");
   humidity.classList.add("current-humidity");
-  humidity.textContent = "\u{1F4A7}" + weatherData.currentConditions.humidity.toFixed();
+  humidity.textContent =
+    "\u{1F4A7}" + weatherData.currentConditions.humidity.toFixed();
 
   const temp = document.createElement("p");
   temp.classList.add("current-temp");
@@ -113,7 +143,7 @@ function displayCurrentWeather(weatherData) {
 
   const description = document.createElement("p");
   description.classList.add("current-description");
-  description.textContent = `${weatherData.description}`;
+  description.textContent = `${weatherData.description.slice(0, weatherData.description.length - 1)}`;
 
   const conditions = document.createElement("p");
   conditions.classList.add("current-conditions");
@@ -143,4 +173,4 @@ function displayCurrentWeather(weatherData) {
   mainContent.appendChild(weatherDiv);
 }
 
-export { displayCurrentWeather };
+export { displayWeather };

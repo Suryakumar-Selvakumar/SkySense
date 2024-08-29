@@ -1,5 +1,5 @@
 import { fetchData } from "./fetchAPIData.js";
-import { displayCurrentWeather } from "./displayCurrentWeather.js";
+import { displayWeather } from "./displayWeather.js";
 import "./style.css";
 
 const mainContent = document.querySelector(".main-content");
@@ -9,7 +9,7 @@ async function getWeatherData(location) {
   try {
     const weatherData = await fetchData(location);
     console.log(weatherData);
-    displayCurrentWeather(weatherData);
+    displayWeather(weatherData);
   } catch (error) {
     console.error(error);
     // Set the text of the div to "location not found" if location couldn't be found.
