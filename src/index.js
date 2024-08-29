@@ -5,11 +5,13 @@ import "./style.css";
 const mainContent = document.querySelector(".main-content");
 const locationForm = document.querySelector(".location-form");
 
+let outerWeatherData;
 async function getWeatherData(location) {
   try {
     const weatherData = await fetchData(location);
     console.log(weatherData);
-    displayWeather(weatherData, "current");
+    outerWeatherData = weatherData;
+    displayWeather(weatherData, "current", weatherData.days[0].datetime);
   } catch (error) {
     console.error(error);
     // Set the text of the div to "location not found" if location couldn't be found.
@@ -35,10 +37,11 @@ locationForm.addEventListener("submit", (event) => {
 });
 
 // Event listener to use the formData to fetch the weather data
+let locationValue;
 locationForm.addEventListener("formdata", (e) => {
   const data = e.formData;
   const dataArray = [];
-  let locationValue;
+
   for (const value of data.values()) {
     dataArray.push(value);
   }
@@ -46,4 +49,21 @@ locationForm.addEventListener("formdata", (e) => {
   locationValue = dataArray[0];
 
   getWeatherData(locationValue);
+});
+
+mainContent.addEventListener("click", (event) => {
+  if (
+    event.target.classList.contains("day") ||
+    event.target.classList.contains("day-para") ||
+    event.target.classList.contains("day-icon") ||
+    event.target.classList.contains("day-temp-max-min")
+  ) {
+    const dataDate = event.target.getAttribute("data-date");
+    const dataIndex = event.target.getAttribute("data-index");
+    if (dataIndex == 0) {
+      displayWeather(outerWeatherData, "current", dataDate);
+    } else {
+      displayWeather(outerWeatherData, "future", dataDate);
+    }
+  }
 });

@@ -207,9 +207,14 @@ async function displayWeather(weatherData, state, dataDate) {
   address.classList.add("current-address");
   address.textContent = `${weatherData.resolvedAddress}`;
 
+  if (state === "current") {
+    mainContent.innerHTML = "";
+  }
+
   if (state === "future") {
     for (let day = 1; day < 8; day++) {
       if (weatherDataDays[day].datetime == dataDate) {
+        mainContent.innerHTML = "";
         datetime.textContent = `${weatherDataDays[day].datetime}`;
         tempMaxMin.textContent =
           "High " +
@@ -222,7 +227,7 @@ async function displayWeather(weatherData, state, dataDate) {
         humidity.textContent =
           "\u{1F4A7}" + weatherDataDays[day].humidity.toFixed();
         temp.textContent = `${weatherDataDays[day].temp.toFixed()}\u02DA`;
-        description.textContent = `${weatherDataDays[day].slice(0, weatherData.description.length - 1)}`;
+        description.textContent = `${weatherDataDays[day].description.slice(0, weatherData.description.length - 1)}`;
         conditions.textContent = `${weatherDataDays[day].conditions}`;
       }
     }
@@ -249,6 +254,7 @@ async function displayWeather(weatherData, state, dataDate) {
 
   const daysDiv = document.createElement("div");
   daysDiv.classList.add("days-div");
+
   for (let i = 0; i < 8; i++) {
     const day = document.createElement("div");
     day.classList.add("day");
@@ -257,14 +263,20 @@ async function displayWeather(weatherData, state, dataDate) {
 
     const dayPara = document.createElement("p");
     dayPara.classList.add("day-para");
+    dayPara.setAttribute("data-date", weatherDataDays[i].datetime);
+    dayPara.setAttribute("data-index", i);
     dayPara.textContent = `${getDayFunc(weatherDataDays[i].datetime)}`;
 
     const dayIcon = document.createElement("img");
     dayIcon.classList.add("day-icon");
+    dayIcon.setAttribute("data-date", weatherDataDays[i].datetime);
+    dayIcon.setAttribute("data-index", i);
     iconSetter(dayIcon, weatherData, i);
 
     const dayTempMaxMin = document.createElement("p");
     dayTempMaxMin.classList.add("day-temp-max-min");
+    dayTempMaxMin.setAttribute("data-date", weatherDataDays[i].datetime);
+    dayTempMaxMin.setAttribute("data-index", i);
     dayTempMaxMin.textContent =
       weatherDataDays[i].tempmax.toFixed() +
       "\u02DA" +
@@ -274,8 +286,12 @@ async function displayWeather(weatherData, state, dataDate) {
       "\u02DA";
 
     day.append(dayPara, dayIcon, dayTempMaxMin);
+    if (dataDate == weatherDataDays[i].datetime) {
+      day.style.cssText = "  background-color: rgba(128, 128, 128, 0.7);";
+    }
     daysDiv.appendChild(day);
   }
+
   mainContent.appendChild(daysDiv);
 }
 
