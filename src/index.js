@@ -9,7 +9,7 @@ async function getWeatherData(location) {
   try {
     const weatherData = await fetchData(location);
     console.log(weatherData);
-    displayWeather(weatherData);
+    displayWeather(weatherData, "current");
   } catch (error) {
     console.error(error);
     // Set the text of the div to "location not found" if location couldn't be found.

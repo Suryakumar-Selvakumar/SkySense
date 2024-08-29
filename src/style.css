@@ -214,6 +214,8 @@ form {
   flex-direction: column;
   justify-content: space-between;
   font-size: 1rem;
+  font-weight: 600;
+  height: 125px;
 }
 
 .day-para {

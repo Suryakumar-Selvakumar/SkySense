@@ -207,6 +207,27 @@ async function displayWeather(weatherData, state, dataDate) {
   address.classList.add("current-address");
   address.textContent = `${weatherData.resolvedAddress}`;
 
+  if (state === "future") {
+    for (let day = 1; day < 8; day++) {
+      if (weatherDataDays[day].datetime == dataDate) {
+        datetime.textContent = `${weatherDataDays[day].datetime}`;
+        tempMaxMin.textContent =
+          "High " +
+          weatherDataDays[day].tempmax.toFixed() +
+          "\u02DA" +
+          " \uFF5C " +
+          "Low " +
+          weatherDataDays[day].tempmin.toFixed() +
+          "\u02DA";
+        humidity.textContent =
+          "\u{1F4A7}" + weatherDataDays[day].humidity.toFixed();
+        temp.textContent = `${weatherDataDays[day].temp.toFixed()}\u02DA`;
+        description.textContent = `${weatherDataDays[day].slice(0, weatherData.description.length - 1)}`;
+        conditions.textContent = `${weatherDataDays[day].conditions}`;
+      }
+    }
+  }
+
   const addressDateTimeDiv = document.createElement("div");
   addressDateTimeDiv.classList.add("address-date-time");
   addressDateTimeDiv.append(address, datetime);
@@ -232,6 +253,7 @@ async function displayWeather(weatherData, state, dataDate) {
     const day = document.createElement("div");
     day.classList.add("day");
     day.setAttribute("data-date", weatherDataDays[i].datetime);
+    day.setAttribute("data-index", i);
 
     const dayPara = document.createElement("p");
     dayPara.classList.add("day-para");
