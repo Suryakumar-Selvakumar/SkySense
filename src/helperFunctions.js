@@ -7,10 +7,9 @@ function formatAMPM(hours, minutes) {
 }
 
 function getDayFunc(date) {
-  const day = new Date(date).getDay();
-  if (day === 0) {
-    return "Sun";
-  } else if (day === 1) {
+  let day = new Date(date).getDay();
+  day += 1;
+  if (day === 1) {
     return "Mon";
   } else if (day === 2) {
     return "Tue";
@@ -22,6 +21,8 @@ function getDayFunc(date) {
     return "Fri";
   } else if (day === 6) {
     return "Sat";
+  } else {
+    return "Sun";
   }
 }
 
