@@ -14,8 +14,13 @@ import partlyCloudyDay from "./icons/partly-cloudy-day.svg";
 import partlyCloudyNight from "./icons/partly-cloudy-night.svg";
 import clearDay from "./icons/clear-day.svg";
 import clearNight from "./icons/clear-night.svg";
+import {
+  formatAMPM,
+  getDayFunc,
+  celsiusToFahrenheit,
+  fahrenheitToCelsius,
+} from "./helperFunctions";
 
-import { formatAMPM, getDayFunc } from "./helperFunctions";
 function iconSetter(icon, weatherData, index) {
   if (weatherData.days[index].icon === "snow") {
     icon.src = snow;
@@ -124,7 +129,7 @@ async function fetchTimeZone(latitude, longitude, date, time) {
     .reduce((response, word) => (response += word.slice(0, 1)), "");
 }
 
-async function displayWeather(weatherData, state, dataDate) {
+async function displayWeather(weatherData, state, dataDate, degreeType) {
   const mainContent = document.querySelector(".main-content");
   const weatherDiv = document.createElement("div");
   weatherDiv.classList.add("weather-div");
@@ -151,14 +156,25 @@ async function displayWeather(weatherData, state, dataDate) {
 
   const tempMaxMin = document.createElement("p");
   tempMaxMin.classList.add("current-temp-max-min");
-  tempMaxMin.textContent =
-    "High " +
-    weatherDataDays[0].tempmax.toFixed() +
-    "\u02DA" +
-    " \uFF5C " +
-    "Low " +
-    weatherDataDays[0].tempmin.toFixed() +
-    "\u02DA";
+  if (degreeType === "fahrenheit") {
+    tempMaxMin.textContent =
+      "High " +
+      weatherDataDays[0].tempmax.toFixed() +
+      "\u02DA" +
+      " \uFF5C " +
+      "Low " +
+      weatherDataDays[0].tempmin.toFixed() +
+      "\u02DA";
+  } else {
+    tempMaxMin.textContent =
+      "High " +
+      fahrenheitToCelsius(weatherDataDays[0].tempmax.toFixed()) +
+      "\u02DA" +
+      " \uFF5C " +
+      "Low " +
+      fahrenheitToCelsius(weatherDataDays[0].tempmin.toFixed()) +
+      "\u02DA";
+  }
 
   const humidity = document.createElement("p");
   humidity.classList.add("current-humidity");
@@ -167,7 +183,11 @@ async function displayWeather(weatherData, state, dataDate) {
 
   const temp = document.createElement("p");
   temp.classList.add("current-temp");
-  temp.textContent = `${weatherData.currentConditions.temp.toFixed()}\u02DA`;
+  if (degreeType === "fahrenheit") {
+    temp.textContent = `${weatherData.currentConditions.temp.toFixed()}\u02DA`;
+  } else {
+    temp.textContent = `${fahrenheitToCelsius(weatherData.currentConditions.temp.toFixed())}\u02DA`;
+  }
 
   const description = document.createElement("p");
   description.classList.add("current-description");
@@ -190,14 +210,25 @@ async function displayWeather(weatherData, state, dataDate) {
       if (weatherDataDays[day].datetime == dataDate) {
         mainContent.innerHTML = "";
         datetime.textContent = `${weatherDataDays[day].datetime}`;
-        tempMaxMin.textContent =
-          "High " +
-          weatherDataDays[day].tempmax.toFixed() +
-          "\u02DA" +
-          " \uFF5C " +
-          "Low " +
-          weatherDataDays[day].tempmin.toFixed() +
-          "\u02DA";
+        if (degreeType === "fahrenheit") {
+          tempMaxMin.textContent =
+            "High " +
+            weatherDataDays[day].tempmax.toFixed() +
+            "\u02DA" +
+            " \uFF5C " +
+            "Low " +
+            weatherDataDays[day].tempmin.toFixed() +
+            "\u02DA";
+        } else {
+          tempMaxMin.textContent =
+            "High " +
+            fahrenheitToCelsius(weatherDataDays[day].tempmax.toFixed()) +
+            "\u02DA" +
+            " \uFF5C " +
+            "Low " +
+            fahrenheitToCelsius(weatherDataDays[day].tempmin.toFixed()) +
+            "\u02DA";
+        }
         humidity.textContent =
           "\u{1F4A7}" + weatherDataDays[day].humidity.toFixed();
         temp.textContent = `${weatherDataDays[day].temp.toFixed()}\u02DA`;

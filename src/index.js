@@ -12,7 +12,7 @@ async function getWeatherData(location) {
     const weatherData = await fetchData(location);
     // console.log(weatherData);
     outerWeatherData = weatherData;
-    displayWeather(weatherData, "current", weatherData.days[0].datetime);
+    displayWeather(weatherData, "current", weatherData.days[0].datetime, "fahrenheit");
   } catch (error) {
     console.error(error);
     // Set the text of the div to "location not found" if location couldn't be found.
@@ -88,9 +88,12 @@ mainContent.addEventListener("click", (event) => {
     const dataDate = event.target.getAttribute("data-date");
     const dataIndex = event.target.getAttribute("data-index");
     if (dataIndex == 0) {
-      displayWeather(outerWeatherData, "current", dataDate);
+      displayWeather(outerWeatherData, "current", dataDate, "fahrenheit");
     } else {
-      displayWeather(outerWeatherData, "future", dataDate);
+      displayWeather(outerWeatherData, "future", dataDate, "fahrenheit");
     }
   }
 });
+
+//Event to change the temps based degreeType that was chosen
+
