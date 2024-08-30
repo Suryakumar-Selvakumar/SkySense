@@ -101,11 +101,6 @@ body {
   transform: translateX(0) translateY(-50%) scale(1);
 }
 
-/* Checked State */
-.input_wrapper input[type="checkbox"]:checked {
-  /* background: #23da87; */
-}
-
 .input_wrapper input[type="checkbox"]:checked:after {
   left: calc(100% - 37px);
 }
