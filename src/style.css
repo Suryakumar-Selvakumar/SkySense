@@ -120,6 +120,7 @@ form {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  padding-top: 2rem;
 }
 
 .weather-div {
@@ -259,6 +260,8 @@ form {
   width: 110px;
   border-radius: 10px;
   cursor: pointer;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+
 }
 
 .day-para {
