@@ -6,18 +6,29 @@ import "./style.css";
 const mainContent = document.querySelector(".main-content");
 const locationForm = document.querySelector(".location-form");
 
-let outerWeatherData, currentDate;
+let outerWeatherData,
+  currentDate,
+  checkBoxChecked = false;
 async function getWeatherData(location) {
   try {
     const weatherData = await fetchData(location);
     outerWeatherData = weatherData;
     currentDate = outerWeatherData.days[0].datetime;
-    displayWeather(
-      weatherData,
-      "current",
-      weatherData.days[0].datetime,
-      "fahrenheit"
-    );
+    if (checkBoxChecked === true) {
+      displayWeather(
+        weatherData,
+        "current",
+        weatherData.days[0].datetime,
+        "celsius"
+      );
+    } else {
+      displayWeather(
+        weatherData,
+        "current",
+        weatherData.days[0].datetime,
+        "fahrenheit"
+      );
+    }
   } catch (error) {
     console.error(error);
     // Set the text of the div to "location not found" if location couldn't be found.
@@ -83,7 +94,6 @@ locationForm.addEventListener("formdata", (e) => {
 });
 
 //Event listener to change the temps based degreeType that was chosen
-let checkBoxChecked = false;
 const degreeTypeCheckBox = document.querySelector(".switch_4");
 degreeTypeCheckBox.addEventListener("click", (event) => {
   if (event.target.checked) {
