@@ -8,6 +8,7 @@ const locationForm = document.querySelector(".location-form");
 
 let outerWeatherData,
   currentDate,
+  currentIndex = 0,
   checkBoxChecked = false;
 async function getWeatherData(location) {
   try {
@@ -98,10 +99,18 @@ const degreeTypeCheckBox = document.querySelector(".switch_4");
 degreeTypeCheckBox.addEventListener("click", (event) => {
   if (event.target.checked) {
     checkBoxChecked = true;
-    displayWeather(outerWeatherData, "current", currentDate, "celsius");
+    if (currentIndex == 0) {
+      displayWeather(outerWeatherData, "current", currentDate, "celsius");
+    } else {
+      displayWeather(outerWeatherData, "future", currentDate, "celsius");
+    }
   } else {
     checkBoxChecked = false;
-    displayWeather(outerWeatherData, "current", currentDate, "fahrenheit");
+    if (currentIndex == 0) {
+      displayWeather(outerWeatherData, "current", currentDate, "fahrenheit");
+    } else {
+      displayWeather(outerWeatherData, "future", currentDate, "fahrenheit");
+    }
   }
 });
 
@@ -116,6 +125,7 @@ mainContent.addEventListener("click", (event) => {
     const dataDate = event.target.getAttribute("data-date");
     currentDate = dataDate;
     const dataIndex = event.target.getAttribute("data-index");
+    currentIndex = dataIndex;
     if (dataIndex == 0) {
       if (checkBoxChecked === true) {
         displayWeather(outerWeatherData, "current", dataDate, "celsius");
