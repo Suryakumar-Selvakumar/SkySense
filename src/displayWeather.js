@@ -227,7 +227,7 @@ async function displayWeather(weatherData, state, dataDate) {
         humidity.textContent =
           "\u{1F4A7}" + weatherDataDays[day].humidity.toFixed();
         temp.textContent = `${weatherDataDays[day].temp.toFixed()}\u02DA`;
-        description.textContent = `${weatherDataDays[day].description.slice(0, weatherData.description.length - 1)}`;
+        description.textContent = `${weatherDataDays[day].description.slice(0, weatherDataDays[day].description.length - 1)}`;
         conditions.textContent = `${weatherDataDays[day].conditions}`;
       }
     }

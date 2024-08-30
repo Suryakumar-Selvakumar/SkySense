@@ -9,13 +9,16 @@ let outerWeatherData;
 async function getWeatherData(location) {
   try {
     const weatherData = await fetchData(location);
-    console.log(weatherData);
     outerWeatherData = weatherData;
     displayWeather(weatherData, "current", weatherData.days[0].datetime);
   } catch (error) {
     console.error(error);
     // Set the text of the div to "location not found" if location couldn't be found.
-    console.log("Location not found, please try again.");
+    mainContent.innerHTML = "";
+    const errorDiv = document.createElement("div");
+    errorDiv.classList.add("error-div");
+    errorDiv.textContent = "Location not found, please try again";
+    mainContent.appendChild(errorDiv);
   }
 }
 
@@ -29,6 +32,11 @@ displayFormBtn.addEventListener("click", () => {
 // Event listener to submit enter location form and get its formdata
 locationForm.addEventListener("submit", (event) => {
   mainContent.innerHTML = "";
+  // Set the text of the div to "Loading.." while the data is being fetched.
+  const loadingDiv = document.createElement("div");
+  loadingDiv.classList.add("loading-div");
+  loadingDiv.textContent = "Loading...";
+  mainContent.appendChild(loadingDiv);
   event.preventDefault();
   new FormData(locationForm);
   locationForm.reset();
