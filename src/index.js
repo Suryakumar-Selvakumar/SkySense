@@ -1,5 +1,6 @@
-import { fetchData } from "./fetchAPIData.js";
+import { fetchData } from "./visualCrossingAPI.js";
 import { displayWeather } from "./displayWeather.js";
+import { getAddress } from "./geoapifyAPI.js";
 import "./style.css";
 
 const mainContent = document.querySelector(".main-content");
@@ -9,6 +10,7 @@ let outerWeatherData;
 async function getWeatherData(location) {
   try {
     const weatherData = await fetchData(location);
+    // console.log(weatherData);
     outerWeatherData = weatherData;
     displayWeather(weatherData, "current", weatherData.days[0].datetime);
   } catch (error) {
@@ -21,6 +23,22 @@ async function getWeatherData(location) {
     mainContent.appendChild(errorDiv);
   }
 }
+
+// Event listener to display the weather details of the user's location on page load
+document.addEventListener("DOMContentLoaded", () => {
+  navigator.geolocation.getCurrentPosition((position) => {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    const loadingDiv = document.createElement("div");
+    loadingDiv.classList.add("loading-div");
+    loadingDiv.textContent = "Loading...";
+    mainContent.appendChild(loadingDiv);
+    getAddress(latitude, longitude).then((address) => {
+      getWeatherData(address);
+    });
+  });
+});
 
 //Event listener to display the enter location form
 const displayFormBtn = document.querySelector("#display-form");
@@ -59,6 +77,7 @@ locationForm.addEventListener("formdata", (e) => {
   getWeatherData(locationValue);
 });
 
+// Event listener to display the weather details of the other days in the week
 mainContent.addEventListener("click", (event) => {
   if (
     event.target.classList.contains("day") ||

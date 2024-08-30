@@ -1,9 +1,3 @@
-/* @font-face {
-  font-family: "myFontBold";
-  src: url("./didot_bold-webfont.woff2") format("woff2"),
-    url("./didot_bold-webfont.woff") format("woff2");
-} */
-
 @font-face {
   font-family: "myFontRegular";
   src: url("./notosans-variablefont_wdthwght-webfont.woff2") format("woff2");
