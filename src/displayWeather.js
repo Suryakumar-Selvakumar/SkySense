@@ -14,12 +14,7 @@ import partlyCloudyDay from "./icons/partly-cloudy-day.svg";
 import partlyCloudyNight from "./icons/partly-cloudy-night.svg";
 import clearDay from "./icons/clear-day.svg";
 import clearNight from "./icons/clear-night.svg";
-import {
-  formatAMPM,
-  getDayFunc,
-  celsiusToFahrenheit,
-  fahrenheitToCelsius,
-} from "./helperFunctions";
+import { formatAMPM, getDayFunc, fahrenheitToCelsius } from "./helperFunctions";
 import { fetchTimeZone } from "./timeZoneAPI";
 
 function iconSetter(icon, weatherData, index) {
@@ -149,11 +144,11 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
   } else {
     tempMaxMin.textContent =
       "High " +
-      fahrenheitToCelsius(weatherDataDays[0].tempmax.toFixed()) +
+      fahrenheitToCelsius(weatherDataDays[0].tempmax.toFixed()).toFixed() +
       "\u02DA" +
       " \uFF5C " +
       "Low " +
-      fahrenheitToCelsius(weatherDataDays[0].tempmin.toFixed()) +
+      fahrenheitToCelsius(weatherDataDays[0].tempmin.toFixed()).toFixed() +
       "\u02DA";
   }
 
@@ -167,7 +162,7 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
   if (degreeType === "fahrenheit") {
     temp.textContent = `${weatherData.currentConditions.temp.toFixed()}\u02DA`;
   } else {
-    temp.textContent = `${fahrenheitToCelsius(weatherData.currentConditions.temp.toFixed())}\u02DA`;
+    temp.textContent = `${fahrenheitToCelsius(weatherData.currentConditions.temp.toFixed()).toFixed()}\u02DA`;
   }
 
   const description = document.createElement("p");
@@ -203,16 +198,24 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
         } else {
           tempMaxMin.textContent =
             "High " +
-            fahrenheitToCelsius(weatherDataDays[day].tempmax.toFixed()) +
+            fahrenheitToCelsius(
+              weatherDataDays[day].tempmax.toFixed()
+            ).toFixed() +
             "\u02DA" +
             " \uFF5C " +
             "Low " +
-            fahrenheitToCelsius(weatherDataDays[day].tempmin.toFixed()) +
+            fahrenheitToCelsius(
+              weatherDataDays[day].tempmin.toFixed()
+            ).toFixed() +
             "\u02DA";
         }
         humidity.textContent =
           "\u{1F4A7}" + weatherDataDays[day].humidity.toFixed();
-        temp.textContent = `${weatherDataDays[day].temp.toFixed()}\u02DA`;
+        if (degreeType === "fahrenheit") {
+          temp.textContent = `${weatherDataDays[day].temp.toFixed()}\u02DA`;
+        } else {
+          temp.textContent = `${fahrenheitToCelsius(weatherDataDays[day].temp.toFixed()).toFixed()}\u02DA`;
+        }
         description.textContent = `${weatherDataDays[day].description.slice(0, weatherDataDays[day].description.length - 1)}`;
         conditions.textContent = `${weatherDataDays[day].conditions}`;
       }
@@ -263,21 +266,29 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
     dayTempMaxMin.classList.add("day-temp-max-min");
     dayTempMaxMin.setAttribute("data-date", weatherDataDays[i].datetime);
     dayTempMaxMin.setAttribute("data-index", i);
-    dayTempMaxMin.textContent =
-      weatherDataDays[i].tempmax.toFixed() +
-      "\u02DA" +
-      " " +
-      " " +
-      weatherDataDays[i].tempmin.toFixed() +
-      "\u02DA";
-
+    if (degreeType === "fahrenheit") {
+      dayTempMaxMin.textContent =
+        weatherDataDays[i].tempmax.toFixed() +
+        "\u02DA" +
+        " " +
+        " " +
+        weatherDataDays[i].tempmin.toFixed() +
+        "\u02DA";
+    } else {
+      dayTempMaxMin.textContent =
+        fahrenheitToCelsius(weatherDataDays[i].tempmax.toFixed()).toFixed() +
+        "\u02DA" +
+        " " +
+        " " +
+        fahrenheitToCelsius(weatherDataDays[i].tempmin.toFixed()).toFixed() +
+        "\u02DA";
+    }
     day.append(dayPara, dayIcon, dayTempMaxMin);
     if (dataDate == weatherDataDays[i].datetime) {
       day.style.cssText = "  background-color: rgba(128, 128, 128, 0.7);";
     }
     daysDiv.appendChild(day);
   }
-
   mainContent.appendChild(daysDiv);
 }
 

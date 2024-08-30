@@ -25,13 +25,13 @@ function getDayFunc(date) {
   }
 }
 
-function celsiusToFahrenheit(c, f) {
-  f = c * (9 / 5) + 32;
+function celsiusToFahrenheit(c) {
+  const f = c * (9 / 5) + 32;
   return f;
 }
 
-function fahrenheitToCelsius(c, f) {
-  c = ((f - 32) * 5) / 9;
+function fahrenheitToCelsius(f) {
+  const c = ((f - 32) * 5) / 9;
   return c;
 }
 

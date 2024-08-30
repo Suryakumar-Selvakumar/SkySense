@@ -1,6 +1,4 @@
-// const location = document.getElementById("location");
-
-async function fetchData(location) {
+export async function fetchData(location) {
   let baseUrl =
     "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
   const url =
@@ -45,5 +43,3 @@ async function fetchData(location) {
     throw new Error("No Location found for the search query.");
   }
 }
-
-export { fetchData };

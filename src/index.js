@@ -6,13 +6,18 @@ import "./style.css";
 const mainContent = document.querySelector(".main-content");
 const locationForm = document.querySelector(".location-form");
 
-let outerWeatherData;
+let outerWeatherData, currentDate;
 async function getWeatherData(location) {
   try {
     const weatherData = await fetchData(location);
-    // console.log(weatherData);
     outerWeatherData = weatherData;
-    displayWeather(weatherData, "current", weatherData.days[0].datetime, "fahrenheit");
+    currentDate = outerWeatherData.days[0].datetime;
+    displayWeather(
+      weatherData,
+      "current",
+      weatherData.days[0].datetime,
+      "fahrenheit"
+    );
   } catch (error) {
     console.error(error);
     // Set the text of the div to "location not found" if location couldn't be found.
@@ -77,6 +82,19 @@ locationForm.addEventListener("formdata", (e) => {
   getWeatherData(locationValue);
 });
 
+//Event listener to change the temps based degreeType that was chosen
+let checkBoxChecked = false;
+const degreeTypeCheckBox = document.querySelector(".switch_4");
+degreeTypeCheckBox.addEventListener("click", (event) => {
+  if (event.target.checked) {
+    checkBoxChecked = true;
+    displayWeather(outerWeatherData, "current", currentDate, "celsius");
+  } else {
+    checkBoxChecked = false;
+    displayWeather(outerWeatherData, "current", currentDate, "fahrenheit");
+  }
+});
+
 // Event listener to display the weather details of the other days in the week
 mainContent.addEventListener("click", (event) => {
   if (
@@ -86,14 +104,20 @@ mainContent.addEventListener("click", (event) => {
     event.target.classList.contains("day-temp-max-min")
   ) {
     const dataDate = event.target.getAttribute("data-date");
+    currentDate = dataDate;
     const dataIndex = event.target.getAttribute("data-index");
     if (dataIndex == 0) {
-      displayWeather(outerWeatherData, "current", dataDate, "fahrenheit");
+      if (checkBoxChecked === true) {
+        displayWeather(outerWeatherData, "current", dataDate, "celsius");
+      } else {
+        displayWeather(outerWeatherData, "current", dataDate, "fahrenheit");
+      }
     } else {
-      displayWeather(outerWeatherData, "future", dataDate, "fahrenheit");
+      if (checkBoxChecked === true) {
+        displayWeather(outerWeatherData, "future", dataDate, "celsius");
+      } else {
+        displayWeather(outerWeatherData, "future", dataDate, "fahrenheit");
+      }
     }
   }
 });
-
-//Event to change the temps based degreeType that was chosen
-
