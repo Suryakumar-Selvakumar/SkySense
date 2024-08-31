@@ -17,195 +17,73 @@ import clearNight from "./icons/clear-night.svg";
 import { formatAMPM, getDayFunc, fahrenheitToCelsius } from "./helperFunctions";
 import { fetchTimeZone } from "./timeZoneAPI";
 
-function iconSetter(icon, weatherData, index, weatherDiv) {
-  if (index === 0) {
-    if (weatherData.currentConditions.icon === "snow") {
-      icon.src = snow;
-    } else if (weatherData.currentConditions.icon === "snow-showers-day") {
-      icon.src = snowShowersDay;
-    } else if (weatherData.currentConditions.icon === "snow-showers-night") {
-      icon.src = snowShowersNight;
-    } else if (weatherData.currentConditions.icon === "thunder-rain") {
-      icon.src = thunderRain;
-    } else if (weatherData.currentConditions.icon === "thunder-showers-day") {
-      icon.src = thunderShowersDay;
-    } else if (weatherData.currentConditions.icon === "thunder-showers-night") {
-      icon.src = thunderShowersNight;
-    } else if (weatherData.currentConditions.icon === "rain") {
-      icon.src = rain;
-    } else if (weatherData.currentConditions.icon === "showers-day") {
-      icon.src = showersDay;
-    } else if (weatherData.currentConditions.icon === "showers-night") {
-      icon.src = showersNight;
-    } else if (weatherData.currentConditions.icon === "fog") {
-      icon.src = fog;
-    } else if (weatherData.currentConditions.icon === "wind") {
-      icon.src = wind;
-    } else if (weatherData.currentConditions.icon === "cloudy") {
-      icon.src = cloudy;
-    } else if (weatherData.currentConditions.icon === "partly-cloudy-day") {
-      icon.src = partlyCloudyDay;
-    } else if (weatherData.currentConditions.icon === "partly-cloudy-night") {
-      icon.src = partlyCloudyNight;
-    } else if (weatherData.currentConditions.icon === "clear-day") {
-      icon.src = clearDay;
-    } else if (weatherData.currentConditions.icon === "clear-night") {
-      icon.src = clearNight;
-    }
-  } else {
-    if (weatherData.days[index].icon === "snow") {
-      icon.src = snow;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #e0f7fa, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "snow-showers-day") {
-      icon.src = snowShowersDay;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #9fc8e8, #d7eaff, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "snow-showers-night") {
-      icon.src = snowShowersNight;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #a1c4fd, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "thunder-rain") {
-      icon.src = thunderRain;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #434343, #576574, #1e272e);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "thunder-showers-day") {
-      icon.src = thunderShowersDay;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #616161, #e0e0e0, #757575);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "thunder-showers-night") {
-      icon.src = thunderShowersNight;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #0f2027, #203a43, #2c5364);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "rain") {
-      icon.src = rain;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #a1c4fd, #c2e9fb);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "showers-day") {
-      icon.src = showersDay;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #b6fbff, #83a4d4);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "showers-night") {
-      icon.src = showersNight;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #1e3c72, #2a5298);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "fog") {
-      icon.src = fog;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #e0eafc, #cfdef3);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "wind") {
-      icon.src = wind;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #d7d2cc, #304352);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "cloudy") {
-      icon.src = cloudy;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #bdc3c7, #2c3e50);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "partly-cloudy-day") {
-      icon.src = partlyCloudyDay;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #ffffff, #bdc3c7, #ffefba);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "partly-cloudy-night") {
-      icon.src = partlyCloudyNight;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #0f2027);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "clear-day") {
-      icon.src = clearDay;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #56ccf2, #2f80ed);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "clear-night") {
-      icon.src = clearNight;
-      // weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #0f2027);background-repeat: no-repeat;background-size: cover;`;
-    }
-  }
-  if (weatherDiv) {
-    if (weatherData.days[index].icon === "snow") {
-      icon.src = snow;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #e0f7fa, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "snow-showers-day") {
-      icon.src = snowShowersDay;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #9fc8e8, #d7eaff, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "snow-showers-night") {
-      icon.src = snowShowersNight;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #a1c4fd, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "thunder-rain") {
-      icon.src = thunderRain;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #434343, #576574, #1e272e);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "thunder-showers-day") {
-      icon.src = thunderShowersDay;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #616161, #e0e0e0, #757575);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "thunder-showers-night") {
-      icon.src = thunderShowersNight;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #0f2027, #203a43, #2c5364);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "rain") {
-      icon.src = rain;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #a1c4fd, #c2e9fb);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "showers-day") {
-      icon.src = showersDay;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #b6fbff, #83a4d4);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "showers-night") {
-      icon.src = showersNight;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #1e3c72, #2a5298);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "fog") {
-      icon.src = fog;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #e0eafc, #cfdef3);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "wind") {
-      icon.src = wind;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #d7d2cc, #304352);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "cloudy") {
-      icon.src = cloudy;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #bdc3c7, #2c3e50);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "partly-cloudy-day") {
-      icon.src = partlyCloudyDay;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #ffffff, #bdc3c7, #ffefba);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "partly-cloudy-night") {
-      icon.src = partlyCloudyNight;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #0f2027);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "clear-day") {
-      icon.src = clearDay;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #56ccf2, #2f80ed);background-repeat: no-repeat;background-size: cover;`;
-    } else if (weatherData.days[index].icon === "clear-night") {
-      icon.src = clearNight;
-      weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #0f2027);background-repeat: no-repeat;background-size: cover;`;
-    }
-  }
-}
+// Mapping object for weather icons and backgrounds
+const weatherConditionsMap = {
+  snow: { icon: snow, background: "radial-gradient(circle, #e0f7fa, #ffffff)" },
+  "snow-showers-day": {
+    icon: snowShowersDay,
+    background: "radial-gradient(circle, #9fc8e8, #d7eaff, #ffffff)",
+  },
+  "snow-showers-night": {
+    icon: snowShowersNight,
+    background: "radial-gradient(circle, #2c3e50, #a1c4fd, #ffffff)",
+  },
+  "thunder-rain": {
+    icon: thunderRain,
+    background: "radial-gradient(circle, #434343, #576574, #1e272e)",
+  },
+  "thunder-showers-day": {
+    icon: thunderShowersDay,
+    background: "radial-gradient(circle, #616161, #e0e0e0, #757575)",
+  },
+  "thunder-showers-night": {
+    icon: thunderShowersNight,
+    background: "radial-gradient(circle, #0f2027, #203a43, #2c5364)",
+  },
+  rain: { icon: rain, background: "radial-gradient(circle, #a1c4fd, #c2e9fb)" },
+  "showers-day": {
+    icon: showersDay,
+    background: "radial-gradient(circle, #b6fbff, #83a4d4)",
+  },
+  "showers-night": {
+    icon: showersNight,
+    background: "radial-gradient(circle, #1e3c72, #2a5298)",
+  },
+  fog: { icon: fog, background: "radial-gradient(circle, #e0eafc, #cfdef3)" },
+  wind: { icon: wind, background: "radial-gradient(circle, #d7d2cc, #304352)" },
+  cloudy: {
+    icon: cloudy,
+    background: "radial-gradient(circle, #bdc3c7, #2c3e50)",
+  },
+  "partly-cloudy-day": {
+    icon: partlyCloudyDay,
+    background: "radial-gradient(circle, #ffffff, #bdc3c7, #ffefba)",
+  },
+  "partly-cloudy-night": {
+    icon: partlyCloudyNight,
+    background: "radial-gradient(circle, #2c3e50, #0f2027)",
+  },
+  "clear-day": {
+    icon: clearDay,
+    background: "radial-gradient(circle, #56ccf2, #2f80ed)",
+  },
+  "clear-night": {
+    icon: clearNight,
+    background: "radial-gradient(circle, #2c3e50, #0f2027)",
+  },
+};
 
-function iconBackgroundSetter(icon, weatherData, weatherDiv) {
-  if (weatherData.currentConditions.icon === "snow") {
-    icon.src = snow;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #e0f7fa, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "snow-showers-day") {
-    icon.src = snowShowersDay;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #9fc8e8, #d7eaff, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "snow-showers-night") {
-    icon.src = snowShowersNight;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #a1c4fd, #ffffff);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "thunder-rain") {
-    icon.src = thunderRain;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #434343, #576574, #1e272e);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "thunder-showers-day") {
-    icon.src = thunderShowersDay;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #616161, #e0e0e0, #757575);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "thunder-showers-night") {
-    icon.src = thunderShowersNight;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #0f2027, #203a43, #2c5364);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "rain") {
-    icon.src = rain;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #a1c4fd, #c2e9fb);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "showers-day") {
-    icon.src = showersDay;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #b6fbff, #83a4d4);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "showers-night") {
-    icon.src = showersNight;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #1e3c72, #2a5298);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "fog") {
-    icon.src = fog;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #e0eafc, #cfdef3);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "wind") {
-    icon.src = wind;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #d7d2cc, #304352);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "cloudy") {
-    icon.src = cloudy;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #bdc3c7, #2c3e50);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "partly-cloudy-day") {
-    icon.src = partlyCloudyDay;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #ffffff, #bdc3c7, #ffefba);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "partly-cloudy-night") {
-    icon.src = partlyCloudyNight;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #0f2027);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "clear-day") {
-    icon.src = clearDay;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #56ccf2, #2f80ed);background-repeat: no-repeat;background-size: cover;`;
-  } else if (weatherData.currentConditions.icon === "clear-night") {
-    icon.src = clearNight;
-    weatherDiv.style.cssText = `background: radial-gradient(circle, #2c3e50, #0f2027);background-repeat: no-repeat;background-size: cover;`;
-  }
+// Combined function for setting icon and background
+function setWeatherIconAndBackground(icon, weatherData, index, weatherDiv) {
+  const weatherIcon =
+    index === 0
+      ? weatherData.currentConditions.icon
+      : weatherData.days[index].icon;
+  const { icon: iconSrc, background } = weatherConditionsMap[weatherIcon] || {};
+
+  if (iconSrc) icon.src = iconSrc;
+  if (background && weatherDiv)
+    weatherDiv.style.cssText = `background: ${background}; background-repeat: no-repeat; background-size: cover;`;
 }
 
 async function displayWeather(weatherData, state, dataDate, degreeType) {
@@ -217,7 +95,7 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
 
   const icon = document.createElement("img");
   icon.classList.add("current-icon");
-  iconBackgroundSetter(icon, weatherData, weatherDiv);
+  setWeatherIconAndBackground(icon, weatherData, 0, weatherDiv);
 
   const latitude = weatherData.latitude;
   const longitude = weatherData.longitude;
@@ -321,7 +199,7 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
         }
         description.textContent = `${weatherDataDays[day].description.slice(0, weatherDataDays[day].description.length - 1)}`;
         conditions.textContent = `${weatherDataDays[day].conditions}`;
-        iconSetter(icon, weatherData, day, weatherDiv);
+        setWeatherIconAndBackground(icon, weatherData, day, weatherDiv);
       }
     }
   }
@@ -364,7 +242,7 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
     dayIcon.classList.add("day-icon");
     dayIcon.setAttribute("data-date", weatherDataDays[i].datetime);
     dayIcon.setAttribute("data-index", i);
-    iconSetter(dayIcon, weatherData, i);
+    setWeatherIconAndBackground(dayIcon, weatherData, i);
 
     const dayTempMaxMin = document.createElement("p");
     dayTempMaxMin.classList.add("day-temp-max-min");
