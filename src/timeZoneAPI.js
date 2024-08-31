@@ -1,3 +1,5 @@
+
+// timeZone API to retrieve a location's timezone with its latitude, longitude, date and time
 export async function fetchTimeZone(latitude, longitude, date, time) {
     const dateDifferenceInSeconds = (dateInitial, dateFinal) =>
       (dateFinal - dateInitial) / 1_000;

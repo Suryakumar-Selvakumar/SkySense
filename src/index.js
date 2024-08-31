@@ -1,3 +1,4 @@
+// Importing needed APIs and displayWeather functions
 import { fetchData } from "./visualCrossingAPI.js";
 import { displayWeather } from "./displayWeather.js";
 import { getAddress } from "./geoapifyAPI.js";
@@ -6,10 +7,13 @@ import "./style.css";
 const mainContent = document.querySelector(".main-content");
 const locationForm = document.querySelector(".location-form");
 
+// Global variables that will help with displaying the appropriate weather details
 let outerWeatherData,
   currentDate,
   currentIndex = 0,
   checkBoxChecked = false;
+
+// Retrieves the weather data with the location value using the timeline API
 async function getWeatherData(location) {
   try {
     const weatherData = await fetchData(location);

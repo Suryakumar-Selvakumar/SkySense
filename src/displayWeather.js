@@ -1,3 +1,4 @@
+// Import all the icons and helper functions
 import snow from "./icons/snow.svg";
 import snowShowersDay from "./icons/snow-showers-day.svg";
 import snowShowersNight from "./icons/snow-showers-night.svg";
@@ -86,6 +87,8 @@ function setWeatherIconAndBackground(icon, weatherData, index, weatherDiv) {
     weatherDiv.style.cssText = `background: ${background}; background-repeat: no-repeat; background-size: cover;`;
 }
 
+// Async function that displays the weather details based on current(right now) or future(1 of the next 7 days) states,
+// creates the days nav items that allow to check weather of the next 7 days.
 async function displayWeather(weatherData, state, dataDate, degreeType) {
   const mainContent = document.querySelector(".main-content");
   const weatherDiv = document.createElement("div");
@@ -113,6 +116,7 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
 
   const tempMaxMin = document.createElement("p");
   tempMaxMin.classList.add("current-temp-max-min");
+  // The temperature outputs also change based on the given degreeType - Fahrenheit or Celsius
   if (degreeType === "fahrenheit") {
     tempMaxMin.textContent =
       "High " +
@@ -162,6 +166,8 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
     mainContent.innerHTML = "";
   }
 
+  // Future state runs when the nav item for a particular day was clicked
+  // so the weatherDiv gets updated with that day's details
   if (state === "future") {
     for (let day = 1; day < 8; day++) {
       if (weatherDataDays[day].datetime == dataDate) {
@@ -226,6 +232,8 @@ async function displayWeather(weatherData, state, dataDate, degreeType) {
   const daysDiv = document.createElement("div");
   daysDiv.classList.add("days-div");
 
+  // Each time the function is called, the nav items for the next seven days are created
+  // with the appropriate values from the days array for each day
   for (let i = 0; i < 8; i++) {
     const day = document.createElement("div");
     day.classList.add("day");

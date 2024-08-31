@@ -1,3 +1,4 @@
+// Function to fetch the weather data of a location using the timeline API
 export async function fetchData(location) {
   let baseUrl =
     "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";

@@ -1,3 +1,4 @@
+// Function that formats the time retrieved from the timeline API as pm or am
 function formatAMPM(hours, minutes) {
   var ampm = hours >= 12 ? "pm" : "am";
   hours = hours % 12;
@@ -6,6 +7,7 @@ function formatAMPM(hours, minutes) {
   return strTime;
 }
 
+// Function that returns the days for a date using getDay()
 function getDayFunc(date) {
   let day = new Date(date).getDay();
   day += 1;
