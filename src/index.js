@@ -15,6 +15,7 @@ async function getWeatherData(location) {
     const weatherData = await fetchData(location);
     outerWeatherData = weatherData;
     currentDate = outerWeatherData.days[0].datetime;
+    console.log(weatherData);
     if (checkBoxChecked === true) {
       displayWeather(
         weatherData,
