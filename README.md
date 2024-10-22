@@ -5,4 +5,4 @@ A Weather App built using the following APIs:<br>
 - Geoapify's geolocation API
 - Google's timeZone API
 
-
+Please have a look at my project plan if you’d like to see my thought process behind building this project.
