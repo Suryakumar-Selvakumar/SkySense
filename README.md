@@ -1,10 +1,40 @@
-# Weather App: SkySense
+# SkySense
 
-A Weather App built using the following APIs:<br>
-- Visual Crossing's Timeline Weather API
-- Geoapify's geolocation API
-- Google's timeZone API
+Sense the Sky, Seize the Day. A Weather App for Perfect Plans.
 
-#### Demo - https://suryakumar-selvakumar.github.io/Weather-App/
+## Domain
 
-Please have a look at my project plan if you’d like to see my thought process behind building this project.
+https://suryakumar-selvakumar.github.io/Weather-App/
+
+## Preview
+
+<div align="center">
+   <img width=auto height=auto src="./output.png" alt="SkySense Weather App">
+</div>
+
+## Features
+
+- Aesthetic UI - Harmonious Design
+- Informative Details:
+  - Location
+  - Time
+  - TimeZone
+  - Current, High, & Low Temps
+  - Humidity
+  - Description
+- Preemptive Forecast - Weather Prediction for a Week
+- Search Bar - get the weather of any location
+- Globally accessible - Both Fahrenheit & Celcius degree options 
+
+## Technologies
+
+- HTML & CSS - Language
+- JavaScript - Language
+- Webpack - Bundler
+- Visual Crossing's Timeline Weather API - Weather Data
+- Geoapify's geolocation API - Location Data
+- Swagger's Time API - TimeZone Data
+
+## Project Plan
+
+For a detailed thought process and planning behind building this project, please refer to the [Project Plan Document](./project-plan.md).
