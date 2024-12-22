@@ -224,6 +224,8 @@ form {
   color: white;
   background-color: rgb(255, 72, 72, 0.4);
   text-align: center;
+  position: relative;
+  top: -7.5vh;
 }
 
 .loading-div {
@@ -239,6 +241,8 @@ form {
   color: white;
   background-color: rgba(123, 198, 255, 0.4);
   text-align: center;
+  position: relative;
+  top: -7.5vh;
 }
 
 .address-date-time {
