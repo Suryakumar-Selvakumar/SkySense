@@ -4,7 +4,7 @@ Sense the Sky, Seize the Day. A Weather App for Perfect Plans.
 
 ## Domain
 
-https://suryakumar-selvakumar.github.io/Weather-App/
+https://suryakumar-selvakumar.github.io/SkySense/
 
 ## Preview
 
